@@ -1,0 +1,26 @@
+/* Grupo 83 Reporting — hoja compartida */
+:root{
+  --papel:#faf6ef; --tinta:#2b2724; --tenue:#6b625b;
+  --terracota:#b4552d; --linea:#e2d9cc;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--papel); color:var(--tinta);
+  font-family:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.6; font-size:16px;
+}
+.wrap{max-width:44rem;margin:0 auto;padding:4rem 1.5rem 6rem}
+header{border-bottom:1px solid var(--linea);padding-bottom:1.5rem;margin-bottom:2.5rem}
+.marca{font-family:"Space Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--terracota)}
+h1{font-size:1.9rem;line-height:1.2;margin:.6rem 0 .3rem;font-weight:600}
+h2{font-size:1.1rem;margin:2.5rem 0 .6rem;font-weight:600}
+.fecha{font-family:"Space Mono",monospace;font-size:.8rem;color:var(--tenue)}
+p,li{color:var(--tinta)}
+ul{padding-left:1.2rem}
+li{margin:.35rem 0}
+a{color:var(--terracota)}
+footer{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--linea);
+  font-size:.85rem;color:var(--tenue)}
+code{font-family:"Space Mono",monospace;font-size:.9em;background:#f0e9de;
+  padding:.15em .4em;border-radius:3px}

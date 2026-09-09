@@ -1,0 +1,73 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./base.css">
+<title>Autorización recibida — Grupo 83 Reporting</title>
+<style>
+  .caja{border:1px solid var(--linea);background:#fffdf9;border-radius:6px;
+    padding:1.1rem;margin:1rem 0}
+  .rot{font-family:"Space Mono",monospace;font-size:.7rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--tenue);margin-bottom:.4rem}
+  .val{font-family:"Space Mono",monospace;font-size:.9rem;word-break:break-all;
+    line-height:1.5}
+  button{font-family:"Space Grotesk",sans-serif;font-size:.9rem;cursor:pointer;
+    background:var(--terracota);color:#fff;border:0;border-radius:5px;
+    padding:.7rem 1.3rem;margin-top:.5rem}
+  button:hover{opacity:.9}
+  .err{color:var(--terracota);font-weight:600}
+</style>
+</head><body><div class="wrap">
+<header>
+  <div class="marca">Grupo 83 Reporting</div>
+  <h1 id="titulo">Autorización recibida</h1>
+  <div class="fecha" id="sub">Copiá el bloque de abajo y pegalo en la terminal</div>
+</header>
+<div id="salida"></div>
+<footer><a href="./index.html">Inicio</a></footer>
+</div>
+<script>
+(function(){
+  var p = new URLSearchParams(location.search);
+  var code = p.get('code'), realm = p.get('realmId'), state = p.get('state');
+  var out = document.getElementById('salida');
+  var sub = document.getElementById('sub');
+  function caja(rot, val){
+    return '<div class="caja"><div class="rot">'+rot+'</div><div class="val">'+
+      String(val).replace(/[<>&]/g, function(c){
+        return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];}) + '</div></div>';
+  }
+  if (p.get('error')) {
+    document.getElementById('titulo').textContent = 'La autorización falló';
+    sub.hidden = true;
+    out.innerHTML = '<p class="err">Intuit devolvió: ' + p.get('error') + '</p>' +
+      '<p>Volvé a correr el comando de autorización e intentá de nuevo.</p>';
+    return;
+  }
+  if (!code) {
+    document.getElementById('titulo').textContent = 'Nada que copiar';
+    sub.hidden = true;
+    out.innerHTML = '<p>Esta página solo tiene sentido como destino del redirect de ' +
+      'Intuit. Si llegaste directo, no hay ningún código para mostrar.</p>';
+    return;
+  }
+  out.innerHTML =
+    caja('Sociedad (state)', state || '—') +
+    caja('Realm ID (empresa)', realm || '—') +
+    caja('Código de autorización', code) +
+    '<p>El código vence en pocos minutos y sirve una sola vez.</p>' +
+    '<button id="copiar">Copiar la URL completa</button>' +
+    '<div id="aviso" class="fecha" style="margin-top:.6rem"></div>';
+  document.getElementById('copiar').onclick = function(){
+    navigator.clipboard.writeText(location.href).then(function(){
+      document.getElementById('aviso').textContent = 'Copiado. Pegalo en la terminal.';
+    }, function(){
+      document.getElementById('aviso').textContent =
+        'No se pudo copiar solo: copiá la barra de direcciones a mano.';
+    });
+  };
+})();
+</script>
+</body></html>
